@@ -1,0 +1,14 @@
+#!/bin/bash
+
+curl https://api.github.com/users/anpa6841/repos?per_page=100 | jq '.[].name' | tr -d '"' > repos.txt
+
+# Read repos.txt and clone each repository
+while IFS= read -r repo; do
+    if [ ! -z "$repo" ]; then
+        echo "Cloning $repo ..."
+        git clone "git@github.com:anpa6841/$repo"
+    fi
+done < repos.txt
+
+echo "All repositories have been cloned."
+

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+### Downloads several privesc scripts
+
+links=(
+    "https://raw.githubusercontent.com/The-Z-Labs/linux-exploit-suggester/master/linux-exploit-suggester.sh"
+    "https://raw.githubusercontent.com/jondonas/linux-exploit-suggester-2/master/linux-exploit-suggester-2.pl"
+    "https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py"
+    "https://raw.githubusercontent.com/Cerbersec/scripts/master/linux/linpeas.sh"
+    "https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh"
+    "https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy32"
+    "https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64"
+    "https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy32s"
+    "https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64s"
+    "https://raw.githubusercontent.com/pentestmonkey/windows-privesc-check/master/windows_privesc_check.py"
+)
+
+for link in "${links[@]}"; do
+	file_name=$(basename "$link")
+
+	if [[ "$file_name" == *.* ]]; then
+  	    file_name="${file_name%%.*}"
+	fi
+
+	echo "Download Link: $link. Filename: $file_name"
+	wget -q -O $file_name $link
+	
+	chown kali:kali $file_name
+	chmod +x $file_name
+done
