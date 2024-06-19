@@ -27,9 +27,13 @@ for link in "${links[@]}"; do
   	    file_name="${file_name%%.*}"
 	fi
 
-	echo "Download Link: $link. Filename: $file_name"
-	wget -q -O $file_name $link
+	if [ -f $file_name ]; then
+	    echo "File $file_name already exists. Skipping download..."
+	else
+	   echo "Download Link: $link. Filename: $file_name"
+	   wget -q -O $file_name $link
 	
-	chown kali:kali $file_name
-	chmod +x $file_name
+	   chown kali:kali $file_name
+	   chmod +x $file_name
+	fi
 done
